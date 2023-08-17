@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d999b5d-d84e-4c5c-9ed9-a84e45c90958" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/trabalho1/Exercicio1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trabalho1/Exercicios2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trabalho1/Exercicios3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trabalho1/Docente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trabalho1/Exercicios4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trabalho1/Exercicios5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exercices/Contains.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exercices/IsSorted.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exercices/MinNumbers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trabalho1/Exercicios3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/trabalho1/Exercicios3.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,5 +60,16 @@
       <updated>1691308659551</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/trabalho1/Exercicio1.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

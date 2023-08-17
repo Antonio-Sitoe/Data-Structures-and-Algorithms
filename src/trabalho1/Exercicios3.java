@@ -16,7 +16,6 @@ public class Exercicios3 {
                 impares = impares+   arr[i];
             }
         }
-
         System.out.println("SOMA de impares " + impares);
     }
 }
