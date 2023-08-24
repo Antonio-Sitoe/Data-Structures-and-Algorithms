@@ -1,5 +1,5 @@
-ALGORITMO BubbleSort
+ALGORITMO QUICKSORT
 O tempo em complexidade do Algorimto 2.5E7
-Tempo de execução em Segundos 3.114697144
-Numeros de Trocas 35077
-Numeros de comparacoes 67730
+Tempo de execução em Segundos 4.892469862
+Numeros de Trocas 12288660
+Numeros de comparacoes 12283770

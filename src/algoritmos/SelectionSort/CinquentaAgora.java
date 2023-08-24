@@ -56,6 +56,7 @@ public class CinquentaAgora {
                             executionTime = endTime - startTime;
                             bigO = Math.pow(lista_500.length,2);
                             ArrayList<String> dados = new ArrayList<String>();
+                            System.out.println("ALGORITMO SELECTION SORT ");
                             dados.add("ALGORITMO SELECTION SORT ");
                             dados.add("O tempo em complexidade do Algorimto " + bigO);
                             dados.add("Tempo de execução em Segundos " + executionTime / 1e9);
@@ -279,7 +280,7 @@ public class CinquentaAgora {
                             executionTime = endTime - startTime;
                             bigO = Math.pow(lista_500.length,2);
                             ArrayList<String> dados = new ArrayList<String>();
-                            dados.add("ALGORITMO BubbleSort");
+                            dados.add("ALGORITMO QUICKSORT");
                             dados.add("O tempo em complexidade do Algorimto " + bigO);
                             dados.add("Tempo de execução em Segundos " + executionTime / 1e9);
                             dados.add("Numeros de Trocas " + trocas_quick);
@@ -299,7 +300,7 @@ public class CinquentaAgora {
                             executionTime = endTime - startTime;
                             bigO = Math.pow(lista_5000.length,2);
                             ArrayList<String> dados_2 = new ArrayList<String>();
-                            dados_2.add("ALGORITMO BubbleSort");
+                            dados_2.add("ALGORITMO QUICKSORT");
                             dados_2.add("O tempo em complexidade do Algorimto " + bigO);
                             dados_2.add("Tempo de execução em Segundos " + executionTime / 1e9);
                             dados_2.add("Numeros de Trocas " + trocas_quick);
@@ -319,7 +320,7 @@ public class CinquentaAgora {
                             executionTime = endTime - startTime;
                             bigO = Math.pow(lista_com_50000.length,2);
                             ArrayList<String> dados_3 = new ArrayList<String>();
-                            dados_3.add("ALGORITMO BubbleSort");
+                            dados_3.add("ALGORITMO QUICKSORT");
                             dados_3.add("O tempo em complexidade do Algorimto " + bigO);
                             dados_3.add("Tempo de execução em Segundos " + executionTime / 1e9);
                             dados_3.add("Numeros de Trocas " + trocas_quick);
@@ -339,19 +340,13 @@ public class CinquentaAgora {
             n = sc.next();
         }
 
-
-
-
-
-
-
     }
-    public  static  int[] bubbleSort(int[] lista, String flug){
+    public  static  int[] bubbleSort(int[] LITO, String flug){
         int comparacoes=0;
+        int[] lista = LITO.clone();
         System.out.println(Arrays.toString(lista));
-        if(flug =="asc") {
+        if(flug.equals("asc")) {
             boolean troca;
-
             for (int i = 0; i < lista.length; i++) {
                 troca = false;
                 for (int j = 0; j < lista.length - 1; j++) {
@@ -363,7 +358,6 @@ public class CinquentaAgora {
                         comparacoes++;
                     }
                 }
-
             }
         } else {
             int n = lista.length;
