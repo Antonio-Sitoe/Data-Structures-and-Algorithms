@@ -1,5 +1,5 @@
 ALGORITMO BubbleSort
-O tempo em complexidade do Algorimto 250000.0
-Tempo de execução em Segundos 0.008583284
-Numeros de Trocas 59206
-Numeros de comparacoes 59206
+O tempo em complexidade do Algorimto 2.5E7
+Tempo de execução em Segundos 3.114697144
+Numeros de Trocas 35077
+Numeros de comparacoes 67730

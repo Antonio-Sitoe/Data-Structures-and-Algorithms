@@ -18,7 +18,7 @@ public class CinquentaAgora {
         Scanner sc = new Scanner(System.in);
         System.out.println("VAMOS COMECAR COM OS ALGORITMOS ");
         String n = "";
-        int numero, quantidadeListas;
+        int numero, quantidadeListas, descAsc;
         long startTime;
         long endTime;
         long executionTime;
@@ -42,10 +42,15 @@ public class CinquentaAgora {
                     System.out.println("3. 50_000");
                     quantidadeListas = sc.nextInt();
 
+                    System.out.println("Gostaria de ordenar por Ordem Crescente ou decrescente?");
+                    System.out.println("1. Crescente");
+                    System.out.println("2. Decrescente");
+                    descAsc= sc.nextInt();
+
                     switch (quantidadeListas){
                         case 1:
                             startTime = System.nanoTime();
-                            int num_trocas[] = selectionSort(lista_500,"asc");
+                            int num_trocas[] = selectionSort(lista_500,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -65,7 +70,7 @@ public class CinquentaAgora {
                             break;
                         case 2:
                             startTime = System.nanoTime();
-                            int num_trocas_2[] = selectionSort(lista_5000,"asc");
+                            int num_trocas_2[] = selectionSort(lista_5000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -85,7 +90,7 @@ public class CinquentaAgora {
                             break;
                         case 3:
                             startTime = System.nanoTime();
-                            int num_trocas_3[] = selectionSort(lista_com_50000,"asc");
+                            int num_trocas_3[] = selectionSort(lista_com_50000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -113,10 +118,15 @@ public class CinquentaAgora {
                     System.out.println("3. 50_000");
                     quantidadeListas = sc.nextInt();
 
+                    System.out.println("Gostaria de ordenar por Ordem Crescente ou decrescente?");
+                    System.out.println("1. Crescente");
+                    System.out.println("2. Decrescente");
+                    descAsc= sc.nextInt();
+
                     switch (quantidadeListas){
                         case 1:
                             startTime = System.nanoTime();
-                            int num_trocas[] = insertionSort(lista_500,"asc");
+                            int num_trocas[] = insertionSort(lista_500,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -136,7 +146,7 @@ public class CinquentaAgora {
                             break;
                         case 2:
                             startTime = System.nanoTime();
-                            int num_trocas_2[] = insertionSort(lista_5000,"asc");
+                            int num_trocas_2[] = insertionSort(lista_5000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -156,7 +166,7 @@ public class CinquentaAgora {
                             break;
                         case 3:
                             startTime = System.nanoTime();
-                            int num_trocas_3[] = insertionSort(lista_com_50000,"asc");
+                            int num_trocas_3[] = insertionSort(lista_com_50000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -184,10 +194,15 @@ public class CinquentaAgora {
                     System.out.println("3. 50_000");
                     quantidadeListas = sc.nextInt();
 
+                    System.out.println("Gostaria de ordenar por Ordem Crescente ou decrescente?");
+                    System.out.println("1. Crescente");
+                    System.out.println("2. Decrescente");
+                    descAsc= sc.nextInt();
+
                     switch (quantidadeListas){
                         case 1:
                             startTime = System.nanoTime();
-                            int num_trocas[] = bubbleSort(lista_500,"desc");
+                            int num_trocas[] = bubbleSort(lista_500,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -207,7 +222,7 @@ public class CinquentaAgora {
                             break;
                         case 2:
                             startTime = System.nanoTime();
-                            int num_trocas_2[] = bubbleSort(lista_5000,"asc");
+                            int num_trocas_2[] = bubbleSort(lista_5000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -227,7 +242,7 @@ public class CinquentaAgora {
                             break;
                         case 3:
                             startTime = System.nanoTime();
-                            int num_trocas_3[] = bubbleSort(lista_com_50000,"asc");
+                            int num_trocas_3[] = bubbleSort(lista_com_50000,descAsc == 1 ? "asc" : "desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -298,7 +313,7 @@ public class CinquentaAgora {
                             break;
                         case 3:
                             startTime = System.nanoTime();
-                            quickSort(lista_5000,0,lista_com_50000.length-1);
+                            quickSort(lista_com_50000,0,lista_com_50000.length-1);
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -370,6 +385,7 @@ public class CinquentaAgora {
         return  troca_comparacoes;
     }
     public  static int[] insertionSort(int[] lista,String flug){
+        System.out.println(Arrays.toString(lista));
         int key, j;
         int trocas=0, comparacoes=0;
         for (int i = 0; i < lista.length; i++) {
@@ -394,6 +410,7 @@ public class CinquentaAgora {
 
             lista[j+1] = key;
         }
+        System.out.println(Arrays.toString(lista));
         int[] troca_comparacoes = new int[2];
         troca_comparacoes[0] = trocas;
         troca_comparacoes[1] = comparacoes;
@@ -403,6 +420,7 @@ public class CinquentaAgora {
         int min;
         int trocas = 0;
         int comparacoes =0;
+        System.out.println(Arrays.toString(lista));
 
         for (int i = 0; i < lista.length; i++) {
             min = i;
@@ -425,17 +443,20 @@ public class CinquentaAgora {
                 trocas++;
             }
         }
+        System.out.println(Arrays.toString(lista));
         int[] troca_comparacoes = new int[2];
         troca_comparacoes[0] = trocas;
         troca_comparacoes[1] = comparacoes;
         return  troca_comparacoes;
     }
     public static void quickSort(int[] arr, int low, int high) {
+        System.out.println(Arrays.toString(arr));
         if (low < high) {
             int pivotIndex = partition(arr, low, high);
             quickSort(arr, low, pivotIndex - 1);
             quickSort(arr, pivotIndex + 1, high);
         }
+        System.out.println(Arrays.toString(arr));
     }
 
     public static int partition(int[] arr, int low, int high) {
@@ -477,7 +498,7 @@ public class CinquentaAgora {
                     fileWriter.write(data.get(i)+"\n");
                 }
                 fileWriter.close();
-                System.out.println("Data has been written to the file.");
+                System.out.println("Dados Escritos no ficheiro out.txt, se continuar perdera os dados");
             } catch (IOException e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }

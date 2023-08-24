@@ -92,8 +92,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/algoritmos/SelectionSort/CinquentaAgora.java</url>
-          <line>433</line>
-          <option name="timeStamp" value="7" />
+          <line>125</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/algoritmos/SelectionSort/CinquentaAgora.java</url>
+          <line>387</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
