@@ -187,7 +187,7 @@ public class CinquentaAgora {
                     switch (quantidadeListas){
                         case 1:
                             startTime = System.nanoTime();
-                            int num_trocas[] = bubbleSort(lista_500,"asc");
+                            int num_trocas[] = bubbleSort(lista_500,"desc");
                             endTime = System.nanoTime();
 
                             executionTime = endTime - startTime;
@@ -333,6 +333,7 @@ public class CinquentaAgora {
     }
     public  static  int[] bubbleSort(int[] lista, String flug){
         int comparacoes=0;
+        System.out.println(Arrays.toString(lista));
         if(flug =="asc") {
             boolean troca;
 
@@ -362,6 +363,7 @@ public class CinquentaAgora {
                 }
             }
         }
+        System.out.println(Arrays.toString(lista));
         int[] troca_comparacoes = new int[2];
         troca_comparacoes[0] = comparacoes;
         troca_comparacoes[1] = comparacoes;
