@@ -17,6 +17,7 @@ public class Listas {
   }
 
   public void adicionar(String novoValor){
+    Elemento novoElemento  = new Elemento(novoValor);
 
   }
 
