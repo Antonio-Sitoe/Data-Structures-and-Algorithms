@@ -35,10 +35,25 @@ public class MOTOR {
   }
 
   public boolean CC(String linha) {
-    String nome = linha.substring(0);
-    Curso c = new Curso(nome);
-    // add(nome, c);
+    String nome = sanitizeName(linha);
+    Curso novoCurso = new Curso(nome);
+
+    System.out.println(novoCurso.getNome());
+
+    // try {
+
+    // } catch (Exception e) {
+    // // TODO: handle exception
+    // }
+    // // add(nome, c);
 
     return true;
+  }
+
+  public String sanitizeName(String nome) {
+    String inputString = nome;
+    String processedString = inputString.replaceAll("\\s", "").toLowerCase();
+    String result = processedString.substring(1);
+    return result;
   }
 }

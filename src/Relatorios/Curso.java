@@ -24,7 +24,7 @@ public class Curso {
 
   public Curso(String nome) {
     this.nome = nome;
-    this.planoCurricular = new DoubleLinkedList<>();
+    this.planoCurricular = new DoubleLinkedList<PlanoCurricular>();
   }
 
 }
