@@ -2,9 +2,9 @@ package Relatorios;
 
 import LinkedList.DoubleLinkedList;
 
-public class Curso<T> {
+public class Curso {
   private String nome;
-  private DoubleLinkedList<T> planoCurricular;
+  private DoubleLinkedList<PlanoCurricular> planoCurricular;
 
   public String getNome() {
     return nome;
@@ -14,11 +14,11 @@ public class Curso<T> {
     this.nome = nome;
   }
 
-  public DoubleLinkedList<T> getPlanoCurricular() {
+  public DoubleLinkedList<PlanoCurricular> getPlanoCurricular() {
     return planoCurricular;
   }
 
-  public void setPlanoCurricular(DoubleLinkedList<T> planoCurricular) {
+  public void setPlanoCurricular(DoubleLinkedList<PlanoCurricular> planoCurricular) {
     this.planoCurricular = planoCurricular;
   }
 

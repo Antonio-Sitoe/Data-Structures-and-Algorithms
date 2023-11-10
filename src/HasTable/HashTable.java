@@ -1,3 +1,5 @@
+package HasTable;
+
 import LinkedList.DoubleLinkedList;
 import LinkedList.DoubleLinkedListEOLException;
 

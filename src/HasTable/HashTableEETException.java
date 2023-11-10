@@ -1,3 +1,4 @@
+package HasTable;
 
 public class HashTableEETException extends Exception {
 
