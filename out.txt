@@ -1,8 +1,0 @@
-
-Tamanho do Array: 5000
-
-SelectionSort:
-Tempo : 42 ms
-
-QuickSort:
-Tempo: 60 ms
