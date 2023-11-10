@@ -8,7 +8,7 @@ public class HashTable<T> {
 	/**
 	 * @param <T>
 	 */
-	private static class KVP<T> {
+	public static class KVP<T> {
 		private String key;
 		private T value;
 		private int rawHash;

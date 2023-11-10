@@ -80,6 +80,7 @@ public class TextFile {
 	public void writeLine(String str) {
 		try {
 			bw.write(str);
+			this.newLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
