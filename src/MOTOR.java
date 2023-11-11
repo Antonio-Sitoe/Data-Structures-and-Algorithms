@@ -1,15 +1,28 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import HasTable.HashTable;
 import LinkedList.DoubleLinkedList;
 import Relatorios.Curso;
 import Relatorios.Disciplina;
+import Relatorios.PlanoCurricular;
 
 public class MOTOR {
   HashTable<Curso> HasCurso = new HashTable<Curso>(100);
   HashTable<Disciplina> HashDisciplinas = new HashTable<Disciplina>(100);
   private String message;
+
+  private class TransformTopicos {
+    public boolean temRepeticao;
+    public ArrayList<String> topicos = new ArrayList<String>();
+
+    public TransformTopicos(boolean tem, ArrayList<String> topicos) {
+      this.temRepeticao = tem;
+      this.topicos = topicos;
+    }
+  }
 
   public void start() {
     String inputFilePath = "/home/antoniositoe/Documentos/GitHub/Data-Structures-and-Algorithms/src/ficheiro.in";
@@ -23,7 +36,7 @@ public class MOTOR {
 
     while (inputFile.readyToRead()) {
       String linha = inputFile.readLine();
-      System.out.println(linha);
+      // System.out.println(linha);
 
       if (linha.startsWith("CC")) {
         this.CC(linha);
@@ -43,35 +56,62 @@ public class MOTOR {
     System.out.println(HasCurso.toString());
   }
 
-  public void CD(String linha, TextFile inputFile) {
-    ArrayList<String> blocos = this.processarBlocoCD(inputFile);
-    String[] primeiraPosicao = blocos.get(0).split(" ");
+  public boolean CD(String linha, TextFile inputFile) {
+    // So adicionamos disciplina a um curso previamente existente
+    String[] linha2 = inputFile.readLine().split(" ");
     String[] partes = linha.split(" ");
+
+    String top1 = inputFile.readLine().trim().toLowerCase();
+    String top2 = inputFile.readLine().trim().toLowerCase();
+    String top3 = inputFile.readLine().trim().toLowerCase();
+    String top4 = inputFile.readLine().trim().toLowerCase();
+    TransformTopicos obj = transformaTopicos(top1, top2, top3, top4);
+    ArrayList<String> topicos = obj.topicos;
 
     int semestre = Integer.parseInt(partes[1]);
     int tipo = Integer.parseInt(partes[2]);
-    String curso = sanitizeName(partes[3]);
-    String numeroDeCreditos = primeiraPosicao[0];
-    String disciplina = primeiraPosicao[1];
+    String curso = partes[3].toLowerCase().trim();
 
-    blocos.remove(0);
-    ArrayList<String> topicos = blocos;
+    double numeroDeCreditos = Double.parseDouble(linha2[0]);
+    String nomeDisciplina = linha2[1].toLowerCase().trim();
 
-    System.out.println("Comando CD encontrado com informações adicionais:");
-    for (String linhaAdicional : topicos) {
-      System.out.println(linhaAdicional);
+    var existeCurso = HasCurso.find(curso);
+    if (existeCurso == null) {
+      this.message = "Curso inexistente.";
+      return false;
     }
-    System.out.println();
 
-    // verificar se existe
+    var disciplinaExiste = HashDisciplinas.find(nomeDisciplina);
+    if (disciplinaExiste != null) {
+      this.message = "Disciplina existente.";
+      return false;
+    }
+    if (obj.temRepeticao) {
+      this.message = "Sequencia de topicos com repeticoes.";
+      return false;
+    }
 
-    // Disciplina novaDisciplina = new Disciplina();
+    Disciplina novDisciplina = new Disciplina(nomeDisciplina, numeroDeCreditos,
+        topicos);
 
-    // System.out.println(blocos.toString());
+    try {
+      HashDisciplinas.add(nomeDisciplina, novDisciplina);
+    } catch (Exception e) {
+      System.out.println("Erro ao adicionar disciplina");
+    }
+    // inserir a disciplina ao plano curricular
+    PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
+    planoCurricular.addDisciplinas(nomeDisciplina);
+
+    // colocar o novo plano ao curso
+    var cursoParaColocarPlano = existeCurso.getValue();
+    cursoParaColocarPlano.addNovoPlanoCurricular(planoCurricular);
+
+    return true;
   }
 
   public boolean RC(String linha) {
-    String nome = sanitizeName(linha);
+    String nome = pegaLinhaEretornaNome(linha);
     var cursoExistente = HasCurso.find(nome);
 
     if (cursoExistente == null) { // curso nao existe
@@ -82,7 +122,7 @@ public class MOTOR {
     Curso cursoEmQuestao = cursoExistente.getValue();
     DoubleLinkedList planoCurricular = cursoEmQuestao.getPlanoCurricular();
 
-    System.out.println("O curso exite " + planoCurricular.toString());
+    // System.out.println("O curso exite " + planoCurricular.toString());
 
     // curso existe
 
@@ -90,7 +130,7 @@ public class MOTOR {
   }
 
   public void CC(String linha) {
-    String nome = sanitizeName(linha);
+    String nome = pegaLinhaEretornaNome(linha);
     Curso novoCurso = new Curso(nome);
 
     try {
@@ -106,27 +146,46 @@ public class MOTOR {
     }
   }
 
-  private ArrayList<String> processarBlocoCD(TextFile inputFile) {
-    // Lê as linhas adicionais relacionadas ao comando CD
-    List<String> linhasAdicionais = new ArrayList<>();
-    while (inputFile.readyToRead()) {
-      String linha = inputFile.readLine();
-      // Verifica se a linha está relacionada ao bloco de informações do comando CD
-      if (linha.trim().isEmpty()) {
-        // Se a linha estiver vazia, termina o processamento do bloco CD
-        break;
-      }
-      // Adiciona a linha à lista de linhas adicionais
-      linhasAdicionais.add(linha);
-    }
+  public void ID() {
 
-    return (ArrayList<String>) linhasAdicionais;
   }
 
-  public String sanitizeName(String nome) {
-    String inputString = nome;
-    String processedString = inputString.replaceAll("\\s", "").toLowerCase();
-    String result = processedString.substring(1);
+  public TransformTopicos transformaTopicos(String top1, String top2, String top3, String top4) {
+    ArrayList<String> topicos = new ArrayList<String>();
+    boolean temRepeticao = false;
+    if (topicos.contains(top1)) {
+      temRepeticao = true;
+    }
+    topicos.add(top1);
+
+    if (topicos.contains(top2)) {
+      temRepeticao = true;
+    }
+    topicos.add(top2);
+
+    if (topicos.contains(top3)) {
+      temRepeticao = true;
+    }
+    topicos.add(top3);
+
+    if (topicos.contains(top4)) {
+      temRepeticao = true;
+    }
+    topicos.add(top4);
+    TransformTopicos topic = new TransformTopicos(temRepeticao, topicos);
+    return topic;
+  }
+
+  public String pegaLinhaEretornaNome(String linha) {
+    String[] inputString = linha.split(" ");
+    return inputString[1].toLowerCase().trim();
+  }
+
+  public ArrayList<String> convertToLowerCase(List<String> inputList) {
+    ArrayList<String> result = new ArrayList<>();
+    for (String element : inputList) {
+      result.add(element.toLowerCase());
+    }
     return result;
   }
 }

@@ -18,6 +18,10 @@ public class Curso {
     return planoCurricular;
   }
 
+  public void addNovoPlanoCurricular(PlanoCurricular planoCurricular) {
+    this.planoCurricular.insert(this.planoCurricular.end(), planoCurricular);
+  }
+
   public void setPlanoCurricular(DoubleLinkedList<PlanoCurricular> planoCurricular) {
     this.planoCurricular = planoCurricular;
   }

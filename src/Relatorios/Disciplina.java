@@ -31,10 +31,15 @@ public class Disciplina {
         this.topicos = topicos;
     }
 
-    public Disciplina(String nome, double numeroDeCreditos) {
+    public Disciplina(String nome, double numeroDeCreditos, ArrayList<String> topicos) {
         this.nome = nome;
         this.numeroDeCreditos = numeroDeCreditos;
-        this.topicos = new ArrayList<String>();
+        this.topicos = topicos;
+    }
+
+    @Override
+    public String toString() {
+        return "Disciplina [nome=" + nome + ", numeroDeCreditos=" + numeroDeCreditos + ", topicos=" + topicos + "]";
     }
 
 }
