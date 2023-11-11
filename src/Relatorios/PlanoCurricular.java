@@ -5,17 +5,17 @@ import java.util.ArrayList;
 public class PlanoCurricular {
     private int semestre;
     private boolean obrigatorio;
-    private ArrayList<String> disciplinas;
+    private ArrayList<Disciplina> disciplinas;
 
-    public ArrayList<String> getDisciplinas() {
+    public ArrayList<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(ArrayList<String> disciplinas) {
+    public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public void addDisciplinas(String nomeDisciplina) {
+    public void addDisciplinas(Disciplina nomeDisciplina) {
         this.disciplinas.add(nomeDisciplina);
     }
 
@@ -38,6 +38,6 @@ public class PlanoCurricular {
     public PlanoCurricular(int semestre, boolean obrigatorio) {
         this.semestre = semestre;
         this.obrigatorio = obrigatorio;
-        this.disciplinas = new ArrayList<String>();
+        this.disciplinas = new ArrayList<Disciplina>();
     }
 }

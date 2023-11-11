@@ -1,13 +1,13 @@
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import HasTable.HashTable;
-import LinkedList.DoubleLinkedList;
 import Relatorios.Curso;
 import Relatorios.Disciplina;
 import Relatorios.PlanoCurricular;
+
+// [] remocao de disciplina no plano curricular
 
 public class MOTOR {
   HashTable<Curso> HasCurso = new HashTable<Curso>(100);
@@ -44,6 +44,10 @@ public class MOTOR {
         this.RC(linha);
       } else if (linha.startsWith("CD")) {
         this.CD(linha, inputFile);
+      } else if (linha.startsWith("ID")) {
+        this.ID(linha, inputFile);
+      } else if (linha.startsWith("RD")) {
+        this.RD(linha, inputFile);
       }
 
       outputFile.writeLine(this.message);
@@ -53,7 +57,79 @@ public class MOTOR {
     // Fechar os arquivos
     inputFile.closeToRead();
     outputFile.closeToWrite();
-    System.out.println(HasCurso.toString());
+    System.out.println(HashDisciplinas.toString());
+  }
+
+  public boolean RD(String linha, TextFile inputFile) {
+    String[] partes = linha.split(" ");
+
+    String curso = partes[1].toLowerCase().trim();
+    String nomeDisciplina = inputFile.readLine().trim().toLowerCase();
+
+    var existeCurso = HasCurso.find(curso);
+    if (existeCurso == null) {
+      this.message = "Curso inexistente.";
+      return false;
+    }
+
+    var disciplinaExiste = HashDisciplinas.find(nomeDisciplina);
+    if (disciplinaExiste == null) {
+      this.message = "Disciplina inexistente.";
+      return false;
+    }
+
+    Curso cursoEmQuestao = existeCurso.getValue();
+    boolean disciplinaEstaNoPlano = cursoEmQuestao.pesquisarDisciplina(nomeDisciplina);
+
+    if (disciplinaEstaNoPlano == false) {
+      this.message = "Disciplina nao pertence ao plano curricular.";
+      return false;
+    }
+
+    cursoEmQuestao.removeDisciplina(nomeDisciplina);
+    this.message = "Remocao de disciplina com sucesso";
+    return true;
+  }
+
+  public boolean ID(String linha, TextFile inputFile) {
+    String[] partes = linha.split(" ");
+
+    String nomeDisciplina = inputFile.readLine().trim().toLowerCase();
+    int semestre = Integer.parseInt(partes[1]);
+    int tipo = Integer.parseInt(partes[2]);
+    String curso = partes[3].toLowerCase().trim();
+
+    var existeCurso = HasCurso.find(curso);
+    if (existeCurso == null) {
+      this.message = "Curso inexistente.";
+      // System.out.println("Curso inexistente.");
+      return false;
+    }
+
+    var disciplinaExiste = HashDisciplinas.find(nomeDisciplina);
+    if (disciplinaExiste == null) {
+      // System.out.println("Disciplina inexistente.");
+      this.message = "Disciplina inexistente.";
+      return false;
+    }
+
+    Curso cursoEmQuestao = existeCurso.getValue();
+    boolean disciplinaEstaNoPlano = cursoEmQuestao.pesquisarDisciplina(nomeDisciplina);
+
+    if (disciplinaEstaNoPlano == true) {
+      System.out.println("Disciplina pertence ao plano curricular.");
+      this.message = "Disciplina pertence ao plano curricular.";
+      return false;
+    }
+
+    PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
+    planoCurricular.addDisciplinas(disciplinaExiste.getValue());
+
+    // colocar o novo plano ao curso
+    var cursoParaColocarPlano = existeCurso.getValue();
+    cursoParaColocarPlano.addNovoPlanoCurricular(planoCurricular);
+    this.message = "Insercao de disciplina com sucesso.";
+    return true;
   }
 
   public boolean CD(String linha, TextFile inputFile) {
@@ -101,7 +177,7 @@ public class MOTOR {
     }
     // inserir a disciplina ao plano curricular
     PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
-    planoCurricular.addDisciplinas(nomeDisciplina);
+    planoCurricular.addDisciplinas(novDisciplina);
 
     // colocar o novo plano ao curso
     var cursoParaColocarPlano = existeCurso.getValue();
@@ -119,13 +195,13 @@ public class MOTOR {
       return false;
     }
 
-    Curso cursoEmQuestao = cursoExistente.getValue();
-    DoubleLinkedList planoCurricular = cursoEmQuestao.getPlanoCurricular();
+    try {
+      HasCurso.remove(nome);
+    } catch (Exception e) {
+      System.out.println("Falha ao remover curso");
+    }
 
-    // System.out.println("O curso exite " + planoCurricular.toString());
-
-    // curso existe
-
+    this.message = "Remocao de curso com sucesso.";
     return true;
   }
 
@@ -144,10 +220,6 @@ public class MOTOR {
     } catch (Exception e) {
       System.out.println(e);
     }
-  }
-
-  public void ID() {
-
   }
 
   public TransformTopicos transformaTopicos(String top1, String top2, String top3, String top4) {

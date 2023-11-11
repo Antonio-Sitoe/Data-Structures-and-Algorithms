@@ -1,10 +1,18 @@
 package Relatorios;
 
-import LinkedList.DoubleLinkedList;
+import java.util.ArrayList;
 
 public class Curso {
   private String nome;
-  private DoubleLinkedList<PlanoCurricular> planoCurricular;
+  private ArrayList<PlanoCurricular> planoCurricular;
+
+  public ArrayList<PlanoCurricular> getPlanoCurricular() {
+    return planoCurricular;
+  }
+
+  public void setPlanoCurricular(ArrayList<PlanoCurricular> planoCurricular) {
+    this.planoCurricular = planoCurricular;
+  }
 
   public String getNome() {
     return nome;
@@ -14,21 +22,43 @@ public class Curso {
     this.nome = nome;
   }
 
-  public DoubleLinkedList<PlanoCurricular> getPlanoCurricular() {
-    return planoCurricular;
-  }
-
   public void addNovoPlanoCurricular(PlanoCurricular planoCurricular) {
-    this.planoCurricular.insert(this.planoCurricular.end(), planoCurricular);
+    this.planoCurricular.add(planoCurricular);
   }
 
-  public void setPlanoCurricular(DoubleLinkedList<PlanoCurricular> planoCurricular) {
-    this.planoCurricular = planoCurricular;
+  public boolean pesquisarDisciplina(String nome) {
+    for (PlanoCurricular plano : this.planoCurricular) {
+      for (Disciplina disciplina : plano.getDisciplinas()) {
+        if (disciplina.getNome().equals(nome)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public boolean removeDisciplina(String nome) {
+    for (int i = 0; i < this.planoCurricular.size(); i++) {
+      PlanoCurricular plano = this.planoCurricular.get(i);
+      for (int j = 0; j < plano.getDisciplinas().size(); j++) {
+        Disciplina disciplina = plano.getDisciplinas().get(j);
+        if (disciplina.getNome().equals(nome)) {
+          this.planoCurricular.remove(i);
+        }
+      }
+    }
+
+    return true;
   }
 
   public Curso(String nome) {
     this.nome = nome;
-    this.planoCurricular = new DoubleLinkedList<PlanoCurricular>();
+    this.planoCurricular = new ArrayList<>();
+  }
+
+  @Override
+  public String toString() {
+    return "Curso [nome=" + nome + ", planoCurricular=" + planoCurricular + "]";
   }
 
 }
