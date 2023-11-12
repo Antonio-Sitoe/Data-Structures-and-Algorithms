@@ -1,17 +1,19 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import HasTable.HashTable;
 import Relatorios.Curso;
 import Relatorios.Disciplina;
 import Relatorios.PlanoCurricular;
+import Relatorios.Topico;
 
 // [] remocao de disciplina no plano curricular
 
 public class MOTOR {
   HashTable<Curso> HasCurso = new HashTable<Curso>(100);
   HashTable<Disciplina> HashDisciplinas = new HashTable<Disciplina>(100);
+  HashTable<Topico> HasTopicos = new HashTable<Topico>(100);
+
   private String message;
 
   private class TransformTopicos {
@@ -52,6 +54,8 @@ public class MOTOR {
         this.PD(linha, inputFile, outputFile);
       } else if (linha.startsWith("PP")) {
         this.PP(linha, outputFile);
+      } else if (linha.startsWith("DT")) {
+        this.DT(linha, outputFile);
       }
 
       outputFile.writeLine(this.message);
@@ -62,6 +66,23 @@ public class MOTOR {
     inputFile.closeToRead();
     outputFile.closeToWrite();
     System.out.println(HashDisciplinas.toString());
+  }
+
+  public boolean DT(String linha, TextFile outputFile) {
+    String nomeTopico = this.pegaLinhaEretornaNome(linha);
+
+    var existeTopico = HasTopicos.find(nomeTopico);
+    if (existeTopico == null) {
+      this.message = "Topico inexistente.";
+      return false;
+    }
+
+    Topico topico = existeTopico.getValue();
+    for (Disciplina disciplina : topico.getDisciplinas()) {
+      outputFile.writeLine(disciplina.getNumeroDeCreditos() + " " + disciplina.getNome().toUpperCase());
+    }
+
+    return true;
   }
 
   public boolean PP(String linha, TextFile outputFile) {
@@ -243,6 +264,7 @@ public class MOTOR {
     } catch (Exception e) {
       System.out.println("Erro ao adicionar disciplina");
     }
+
     novDisciplina.addCurso(curso);
     // inserir a disciplina ao plano curricular
     PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
@@ -251,6 +273,17 @@ public class MOTOR {
     // colocar o novo plano ao curso
     var cursoParaColocarPlano = existeCurso.getValue();
     cursoParaColocarPlano.addNovoPlanoCurricular(planoCurricular);
+
+    for (String nome : topicos) {
+      Topico topico = new Topico(nome);
+      topico.addDisciplina(novDisciplina);
+      try {
+        HasTopicos.add(nome, topico);
+      } catch (Exception e) {
+        System.out.println("Erro ao addiconar topicos");
+      }
+
+    }
 
     return true;
   }
