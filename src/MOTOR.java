@@ -48,6 +48,10 @@ public class MOTOR {
         this.ID(linha, inputFile);
       } else if (linha.startsWith("RD")) {
         this.RD(linha, inputFile);
+      } else if (linha.startsWith("PD")) {
+        this.PD(linha, inputFile, outputFile);
+      } else if (linha.startsWith("PP")) {
+        this.PP(linha, outputFile);
       }
 
       outputFile.writeLine(this.message);
@@ -58,6 +62,71 @@ public class MOTOR {
     inputFile.closeToRead();
     outputFile.closeToWrite();
     System.out.println(HashDisciplinas.toString());
+  }
+
+  public boolean PP(String linha, TextFile outputFile) {
+    String curso = this.pegaLinhaEretornaNome(linha);
+
+    var existeCurso = HasCurso.find(curso);
+    if (existeCurso == null) {
+      this.message = "Curso inexistente.";
+      return false;
+    }
+    Curso cursoEmQuestao = existeCurso.getValue();
+    var plano = cursoEmQuestao.getPlanoCurricular();
+
+    if (plano.size() == 0) {
+      this.message = "Disciplinas inexistentes.";
+      return false;
+    }
+
+    for (PlanoCurricular pc : plano) {
+      for (Disciplina disciplina : pc.getDisciplinas()) {
+        String linhaToPrint = pc.getSemestre() + " " + (pc.isObrigatorio() == false ? 0 : 1)
+            + " " + disciplina.getNumeroDeCreditos() + " " + disciplina.getNome().toUpperCase();
+        outputFile.writeLine(linhaToPrint);
+      }
+
+    }
+    return true;
+  }
+
+  public boolean PD(String linha, TextFile inputFile, TextFile outputFile) {
+    String[] partes = linha.split(" ");
+    String nomeDisciplina = partes[1].toLowerCase().trim();
+
+    var disciplinaExiste = HashDisciplinas.find(nomeDisciplina);
+    if (disciplinaExiste == null) {
+      this.message = "Disciplina inexistente.";
+      return false;
+    }
+
+    Disciplina dc = disciplinaExiste.getValue();
+
+    for (String curso : dc.getCursos()) {
+      var existeCurso = HasCurso.find(curso);
+      if (existeCurso != null) {
+        var planos = existeCurso.getValue().getPlanoCurricular();
+        for (PlanoCurricular plano : planos) {
+
+          for (Disciplina fd : plano.getDisciplinas()) {
+            if (fd.getNome().equals(dc.getNome())) {
+              String linhaToPrint = plano.getSemestre() + " " + (plano.isObrigatorio() == false ? 0 : 1) + " "
+                  + existeCurso.getValue().getNome().toUpperCase();
+
+              outputFile.writeLine(linhaToPrint);
+            }
+          }
+
+        }
+      }
+    }
+    outputFile.writeLine(Double.toString(dc.getNumeroDeCreditos()));
+    for (String topico : dc.getTopicos()) {
+      outputFile.writeLine(topico.toUpperCase());
+    }
+
+    return true;
   }
 
   public boolean RD(String linha, TextFile inputFile) {
@@ -102,13 +171,11 @@ public class MOTOR {
     var existeCurso = HasCurso.find(curso);
     if (existeCurso == null) {
       this.message = "Curso inexistente.";
-      // System.out.println("Curso inexistente.");
       return false;
     }
 
     var disciplinaExiste = HashDisciplinas.find(nomeDisciplina);
     if (disciplinaExiste == null) {
-      // System.out.println("Disciplina inexistente.");
       this.message = "Disciplina inexistente.";
       return false;
     }
@@ -124,6 +191,7 @@ public class MOTOR {
 
     PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
     planoCurricular.addDisciplinas(disciplinaExiste.getValue());
+    disciplinaExiste.getValue().addCurso(curso);
 
     // colocar o novo plano ao curso
     var cursoParaColocarPlano = existeCurso.getValue();
@@ -175,6 +243,7 @@ public class MOTOR {
     } catch (Exception e) {
       System.out.println("Erro ao adicionar disciplina");
     }
+    novDisciplina.addCurso(curso);
     // inserir a disciplina ao plano curricular
     PlanoCurricular planoCurricular = new PlanoCurricular(semestre, tipo == 1);
     planoCurricular.addDisciplinas(novDisciplina);

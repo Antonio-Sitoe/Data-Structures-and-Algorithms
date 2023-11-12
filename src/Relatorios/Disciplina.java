@@ -5,7 +5,16 @@ import java.util.ArrayList;
 public class Disciplina {
     private String nome;
     private double numeroDeCreditos;
+    private ArrayList<String> cursos;
     private ArrayList<String> topicos;
+
+    public ArrayList<String> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(ArrayList<String> cursos) {
+        this.cursos = cursos;
+    }
 
     public String getNome() {
         return nome;
@@ -31,10 +40,17 @@ public class Disciplina {
         this.topicos = topicos;
     }
 
+    public void addCurso(String nome) {
+        if (!this.cursos.contains(nome)) {
+            this.cursos.add(nome);
+        }
+    }
+
     public Disciplina(String nome, double numeroDeCreditos, ArrayList<String> topicos) {
         this.nome = nome;
         this.numeroDeCreditos = numeroDeCreditos;
         this.topicos = topicos;
+        this.cursos = new ArrayList<String>();
     }
 
     @Override

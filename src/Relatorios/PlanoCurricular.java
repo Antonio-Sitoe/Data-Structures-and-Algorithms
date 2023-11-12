@@ -40,4 +40,9 @@ public class PlanoCurricular {
         this.obrigatorio = obrigatorio;
         this.disciplinas = new ArrayList<Disciplina>();
     }
+
+    @Override
+    public String toString() {
+        return "PlanoCurricular [semestre=" + semestre + ", obrigatorio=" + obrigatorio;
+    }
 }
