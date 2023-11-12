@@ -58,7 +58,10 @@ public class MOTOR {
         this.DT(linha, outputFile);
       }
 
-      outputFile.writeLine(this.message);
+      if (!this.message.isEmpty()) {
+        outputFile.writeLine(this.message);
+        outputFile.newLine();
+      }
       this.message = "";
     }
 
@@ -145,8 +148,9 @@ public class MOTOR {
     outputFile.writeLine(Double.toString(dc.getNumeroDeCreditos()));
     for (String topico : dc.getTopicos()) {
       outputFile.writeLine(topico.toUpperCase());
-    }
 
+    }
+    outputFile.newLine();
     return true;
   }
 
