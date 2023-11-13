@@ -7,7 +7,7 @@ import Relatorios.Disciplina;
 import Relatorios.PlanoCurricular;
 import Relatorios.Topico;
 
-// [] remocao de disciplina no plano curricular
+
 
 public class MOTOR {
   HashTable<Curso> HasCurso = new HashTable<Curso>(100);
@@ -68,7 +68,7 @@ public class MOTOR {
     // Fechar os arquivos
     inputFile.closeToRead();
     outputFile.closeToWrite();
-    System.out.println(HashDisciplinas.toString());
+    System.out.println(HasTopicos.toString());
   }
 
   public boolean DT(String linha, TextFile outputFile) {
@@ -82,9 +82,10 @@ public class MOTOR {
 
     Topico topico = existeTopico.getValue();
     for (Disciplina disciplina : topico.getDisciplinas()) {
+
       outputFile.writeLine(disciplina.getNumeroDeCreditos() + " " + disciplina.getNome().toUpperCase());
     }
-
+    outputFile.newLine();
     return true;
   }
 
@@ -110,8 +111,8 @@ public class MOTOR {
             + " " + disciplina.getNumeroDeCreditos() + " " + disciplina.getNome().toUpperCase();
         outputFile.writeLine(linhaToPrint);
       }
-
     }
+    outputFile.newLine();
     return true;
   }
 
@@ -263,6 +264,8 @@ public class MOTOR {
     Disciplina novDisciplina = new Disciplina(nomeDisciplina, numeroDeCreditos,
         topicos);
 
+
+
     try {
       HashDisciplinas.add(nomeDisciplina, novDisciplina);
     } catch (Exception e) {
@@ -278,16 +281,25 @@ public class MOTOR {
     var cursoParaColocarPlano = existeCurso.getValue();
     cursoParaColocarPlano.addNovoPlanoCurricular(planoCurricular);
 
-    for (String nome : topicos) {
-      Topico topico = new Topico(nome);
-      topico.addDisciplina(novDisciplina);
-      try {
-        HasTopicos.add(nome, topico);
-      } catch (Exception e) {
-        System.out.println("Erro ao addiconar topicos");
+      for (String nome : topicos) {
+          Topico topico = new Topico(nome);
+          topico.addDisciplina(novDisciplina);
+
+          try {
+              var existeTopico = HasTopicos.find(nome);
+              if (existeTopico == null) {
+                  HasTopicos.add(nome, topico);
+              }else {
+                  existeTopico.getValue().addDisciplina(novDisciplina);
+              }
+          } catch (Exception e) {
+              System.out.println("ERR: ADD TOPICO "+ nome + "DISCIPLINA "+novDisciplina.getNome());
+          }
+
       }
 
-    }
+
+
 
     return true;
   }

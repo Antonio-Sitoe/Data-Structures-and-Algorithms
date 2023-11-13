@@ -86,4 +86,12 @@ public class TextFile {
 			e.printStackTrace();
 		}
 	}
+	public void writeLineWithoutNew(String str) {
+		try {
+			bw.write(str);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
