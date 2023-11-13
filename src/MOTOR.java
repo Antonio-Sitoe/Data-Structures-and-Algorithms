@@ -27,7 +27,7 @@ public class MOTOR {
   }
 
   public void start() {
-    String inputFilePath = "/home/antoniositoe/Documentos/GitHub/Data-Structures-and-Algorithms/src/ficheiro.in";
+    String inputFilePath = "src/ficheiro.in";
     String outputFilePath = "ficheiro_saida.out";
 
     TextFile inputFile = new TextFile();
